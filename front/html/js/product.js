@@ -24,9 +24,6 @@ function get2() {
                             // console.log(choixCouleur);
                             // console.log(user);
                             choixCouleur.innerHTML += `<option value="${user}">${user}</option>`
-                            const couleur = `${user}`
-                            // console.log(couleur);
-
                         }
                     })
             } else {
@@ -85,13 +82,14 @@ function affichage2(infos) {
 
                         </div>
         </article >
-    `
+        `
 
     // Récupère id
     const addToCart = document.getElementById("addToCart")
     const quantiter = document.getElementById("quantity")
     const couleur = document.getElementById("colors")
 
+    // =============== COULEUR ============================
     // Function récupère couleur
     couleur.addEventListener("click", color)
 
@@ -101,15 +99,17 @@ function affichage2(infos) {
         console.log(resultColor);
     }
 
+    // =============== QUANTITER ==============================
     // Function récupère quantiter
     quantiter.addEventListener("click", number)
 
     // =====Evenement=====
     function number(e) {
         let resultNumber = e.target.value
-        // console.log(resultNumber);
+        console.log(resultNumber);
     }
 
+    // ================ AJOUT LOCAL STORAGE ================================
     // Function ajout Local Storage
     addToCart.addEventListener("click", ajouter)
 
@@ -120,14 +120,14 @@ function affichage2(infos) {
             image: `${infos.imageUrl}`,
             nom: `${infos.name}`,
             prix: `${infos.price}`,
-            // couleur: `resultColor`,
-            // quantiter: `${infos.quantity}`
+            // couleur: resultColor,
+            // quantiter: resultNumber
 
         }
 
         localStorage.user = JSON.stringify(details)
     }
-
 }
 get2()
+
 
