@@ -119,24 +119,57 @@ function affichage2(infos) {
     // Function ajout Local Storage
     addToCart.addEventListener("click", ajouter)
 
-    function ajouter() {
-        // console.log("bon");
+    const details = {
+        image: `${infos.imageUrl}`,
+        nom: `${infos.name}`,
+        prix: `${infos.price}`,
+        couleur: resultColor,
+        quantiter: resultNumber
+    }
 
-        const details = {
-            image: `${infos.imageUrl}`,
-            nom: `${infos.name}`,
-            prix: `${infos.price}`,
-            couleur: resultColor,
-            quantiter: resultNumber
+    function ajouter() {
+
+        const panier = JSON.parse(localStorage.getItem('user'))
+        let produits = []
+
+        // Condition si quantitée pas remplie
+        if (resultNumber <= 0) {
+            alert("Veuillez renseigner une quantitée");
         }
 
-        localStorage.user = JSON.stringify(details)
 
-        let produits = []
-        let panier = JSON.parse(localStorage.getItem('user'))
-        // console.log(panier);
-        produits = panier
-        console.log(produits);
+        // Ajout produit
+        if (panier == null) {
+            console.log("vide");
+            produits = panier
+            produits.push(details)
+            // console.log(produits);
+            localStorage.user = JSON.stringify(produits)
+            console.log(produits);
+            return
+
+
+        } else if (panier.length > 1) {
+            const filtre = produits.filter((x) =>
+                x._id
+            )
+            console.log(filtre);
+
+            console.log("plus que 1")
+            produits = panier
+            produits.push(details)
+            // console.log(produits);
+            localStorage.user = JSON.stringify(produits)
+            console.log(produits);
+            console.log("Votre article à bien été ajouter");
+            return
+        }
+
+        else {
+            console.log("Votre panier est vide");
+        }
+
+
     }
 }
 get2()
