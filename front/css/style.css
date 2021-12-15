@@ -174,24 +174,6 @@ main {
 	-webkit-box-orient: vertical;
 	white-space: normal;
 }
-
-.button_details {
-    padding: 0.5rem;
-    border-radius: 0.2rem;
-    border: none;
-    margin-bottom: 1rem;
-    font-weight: bold;
-}
-
-.button_details:hover {
-    background-color: black;
-    color: white;
-    transform: scale(1.2);
-}
-
-
-
-
 /********/
 /*Footer*/
 /********/

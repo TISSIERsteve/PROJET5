@@ -79,10 +79,9 @@ function affichage2(infos) {
                         <div class="item__content__addButton">
                         <button id="addToCart">Ajouter au panier</button>
                         </div>
-
-                        </div>
-        </article >
-        `
+                </div>
+                </article >
+                `
 
     // Récupère id
     const addToCart = document.getElementById("addToCart")
@@ -94,19 +93,26 @@ function affichage2(infos) {
     couleur.addEventListener("click", color)
 
     // =====Evenement=====
+    // Mis la première couleur par défaut car change ne fonctionne pas bien sinon
+    let resultColor = `${infos.colors[0]}`
+    // console.log(resultColor);
+
     function color(e) {
-        let resultColor = e.target.value
-        console.log(resultColor);
+        resultColor = e.target.value
+        // console.log(resultColor);
     }
 
     // =============== QUANTITER ==============================
     // Function récupère quantiter
-    quantiter.addEventListener("click", number)
+    quantiter.addEventListener("change", number)
 
     // =====Evenement=====
+    // Mis la quantitée à 0 par défaut
+    let resultNumber = 0
+
     function number(e) {
-        let resultNumber = e.target.value
-        console.log(resultNumber);
+        resultNumber = e.target.value
+        // console.log(resultNumber);
     }
 
     // ================ AJOUT LOCAL STORAGE ================================
@@ -116,13 +122,18 @@ function affichage2(infos) {
     function ajouter() {
         // console.log("bon");
 
+        let produits = []
+        let panier = JSON.parse(localStorage.getItem('user'))
+        // console.log(panier);
+        produits = panier
+        console.log(produits);
+
         const details = {
             image: `${infos.imageUrl}`,
             nom: `${infos.name}`,
             prix: `${infos.price}`,
-            // couleur: resultColor,
-            // quantiter: resultNumber
-
+            couleur: resultColor,
+            quantiter: resultNumber
         }
 
         localStorage.user = JSON.stringify(details)

@@ -38,7 +38,6 @@ function affichage() {
                             <img src="${x.imageUrl}" alt="Lorem ipsum dolor sit amet, Kanap name1">
                             <h3 class="productName">${x.name}</h3>
                             <p class="productDescription">${x.description}</p>
-                            <button class="button_details">Voir détails du produit</button>
                         </article>
                     </a>
              `
