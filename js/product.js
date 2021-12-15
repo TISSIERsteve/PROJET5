@@ -122,12 +122,6 @@ function affichage2(infos) {
     function ajouter() {
         // console.log("bon");
 
-        let produits = []
-        let panier = JSON.parse(localStorage.getItem('user'))
-        // console.log(panier);
-        produits = panier
-        console.log(produits);
-
         const details = {
             image: `${infos.imageUrl}`,
             nom: `${infos.name}`,
@@ -137,6 +131,12 @@ function affichage2(infos) {
         }
 
         localStorage.user = JSON.stringify(details)
+
+        let produits = []
+        let panier = JSON.parse(localStorage.getItem('user'))
+        // console.log(panier);
+        produits = panier
+        console.log(produits);
     }
 }
 get2()
