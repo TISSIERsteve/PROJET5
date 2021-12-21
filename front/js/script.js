@@ -46,7 +46,7 @@ function affichage() {
             `
                   <a href="./product.html?_id=${x._id}">
                         <article>
-                            <img src="${x.imageUrl}" alt="Lorem ipsum dolor sit amet, Kanap name1">
+                            <img src="${x.imageUrl}" alt="${x.altTxt}">
                             <h3 class="productName">${x.name}</h3>
                             <p class="productDescription">${x.description}</p>
                         </article>

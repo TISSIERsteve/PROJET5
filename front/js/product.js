@@ -50,11 +50,11 @@ function affichage2(infos) {
         `
         <article>
                     <div class="item__img">
-                        <img src="${infos.imageUrl}" alt="${infos.name}"> 
-                    </div>
-            <div class="item__content">
+                        <img src="${infos.imageUrl}" alt="${infos.altTxt}"> 
+                    </div >
+        <div class="item__content">
 
-                <div class="item__content__titlePrice">
+            <div class="item__content__titlePrice">
                 <h1 id="title">
                     ${infos.name}
                 </h1>
@@ -72,24 +72,24 @@ function affichage2(infos) {
 
             <div class="item__content__settings">
                 <div class="item__content__settings__color">
-                <label for="color-select">Choisir une couleur :</label>
+                    <label for="color-select">Choisir une couleur :</label>
                     <select name="color-select" id="colors">
 
                     </select>
-            </div>
+                </div>
 
                 <div class="item__content__settings__quantity">
-                <label for="itemQuantity">Nombre d'article(s) (1-100) :</label>
-                        <input type="number" name="itemQuantity" min="1" max="100" value="0" id="quantity">
-                        </div>
-                        </div>
-
-                        <div class="item__content__addButton">
-                        <button id="addToCart">Ajouter au panier</button>
-                        </div>
+                    <label for="itemQuantity">Nombre d'article(s) (1-100) :</label>
+                    <input type="number" name="itemQuantity" min="1" max="100" value="0" id="quantity">
                 </div>
+            </div>
+
+            <div class="item__content__addButton">
+                <button id="addToCart">Ajouter au panier</button>
+            </div>
+        </div>
                 </article >
-                `
+        `
     // _________________________________LOCAL STORAGE__________________________________________
 
     // ================= ID ========================
@@ -107,7 +107,7 @@ function affichage2(infos) {
         // console.log(resultColor);
     }
     // Je lui met la premiére couleur par défaut
-    let resultColor = `${infos.colors[0]}`
+    let resultColor = `${infos.colors[0]} `
     // console.log(resultColor);
 
     // =============== QUANTITER ==============================
@@ -136,10 +136,10 @@ function affichage2(infos) {
         }
 
         const details = {
-            id: `${infos._id}`,
-            image: `${infos.imageUrl}`,
-            nom: `${infos.name}`,
-            prix: `${infos.price}`,
+            id: `${infos._id} `,
+            image: `${infos.imageUrl} `,
+            nom: `${infos.name} `,
+            prix: `${infos.price} `,
             couleur: resultColor,
             quantiter: resultNumber
         }
@@ -166,7 +166,7 @@ function affichage2(infos) {
                 cart.push(details)
             }
 
-            alert("Vous venez d'ajouter au panier" + " " + `${infos.name}` + " de couleur" + " " + resultColor);
+            alert("Vous venez d'ajouter au panier" + " " + `${infos.name} ` + " de couleur" + " " + resultColor);
             console.log(cart);
             localStorage.setItem("cart", JSON.stringify(cart))
             return
@@ -174,7 +174,7 @@ function affichage2(infos) {
         } else {
             cart.push(details)
             localStorage.setItem("cart", JSON.stringify(cart))
-            alert("Vous venez d'ajouter au panier" + " " + `${infos.name}` + " de couleur" + " " + resultColor);
+            alert("Vous venez d'ajouter au panier" + " " + `${infos.name} ` + " de couleur" + " " + resultColor);
             console.log(cart);
             return
         }

@@ -7,7 +7,7 @@ let totalAchats = document.getElementById("totalPrice")
 // ====================== LOCAL STORAGE===============================
 // Je récupère le localStorage pour pouvoir afficher dans ma page cart.js
 const PanierResult = JSON.parse(localStorage.cart)
-console.log(PanierResult);
+// console.log(PanierResult);
 
 // ====================== AFFICHAGE QUANTITER ARTICLES ===============
 // Je filtre à travers mon tableau pour récupérer la quantitée d'articles
@@ -25,19 +25,19 @@ PanierResult.filter((x) => {
 let totalPrix = 0
 
 PanierResult.filter((x) => {
-    console.log(x.prix);
-    totalPrix += parseInt(x.prix) * quantiterArticle
+    // console.log(x.prix);
+    totalPrix += parseInt(x.prix)
     totalAchats.innerHTML = totalPrix
 })
 
 // =============== AFFICHAGE DYNAMIQUE DE LA PAGE CART.JS ============
-// Je map le la const du localStorage que j'ai créer au dessus
+// Je map la const du localStorage que j'ai créer au dessus
 cartItems.innerHTML = PanierResult.map((x) =>
 
     `
-            <article class="cart__item" data-id="${x._id}" data-color="{product-color}">
+            <article class="cart__item" data-id="${x.id}" data-color="${x.couleur}">
                 <div class="cart__item__img">
-                  <img src="${x.image}" alt="Photographie d'un canapé">
+                  <img src="${x.image}" alt="">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__description">
@@ -60,17 +60,38 @@ cartItems.innerHTML = PanierResult.map((x) =>
 ).join('')
 
 // ============= MODIFICATION DE LA QUANTITER SUR LA PAGE DYNAMIQUE ===================
-// Je récupère ma class
-const changeQuantiter = document.querySelector(".itemQuantity")
-// console.log(changeQuantiter.value);
+// Je récupère mes class
+const changeQuantiter = document.querySelectorAll(".itemQuantity")
+// console.log(changeQuantiter);
 
-changeQuantiter.addEventListener("change", ecouteChangementQuantiter)
+let resultSupplement = 0
 
-function ecouteChangementQuantiter(e) {
-    e.preventDefault()
-    for (i of PanierResult) {
+// Je fais une boucle pour voyager dans mes class
+for (const item of changeQuantiter) {
+    // console.log(item);
 
-        console.log(i.id);
+    item.addEventListener("change", ecouteChangementQuantiter)
+    // console.log(item);
+
+    function ecouteChangementQuantiter(e) {
+        // console.log(e.target.value);
+        e.preventDefault()
+        // console.log(item.value)
+        let resultSupplement = parseInt(e.target.value)
+        console.log(resultSupplement);
+        quantiter.innerHTML = resultSupplement
+
+        for (i of PanierResult) {
+            // console.log([i]);
+            // console.log("Nom :" + i.nom);
+            // console.log("Prix :" + i.prix);
+            // console.log("Couleur :" + i.couleur)
+            // console.log("Quantiter :" + parseInt(i.quantiter))
+            // // console.log("Quantiter :" + resultSupplement)
+            // console.log("Identifiant :" + i.id)
+            // if (i.id === x.id) {
+            //     console.log('identique');
+            // }
+        }
     }
-
 }
