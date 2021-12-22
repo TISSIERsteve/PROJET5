@@ -3,6 +3,7 @@ const resultat = document.getElementById("items")
 
 // Je donne un nom à mon adresse
 url = `http://localhost:3000/api/products`
+console.log(url);
 
 
 // Je créais une variable annonyme pour pouvoir passer ma data dedans

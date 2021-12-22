@@ -7,6 +7,7 @@ const obtenir = search.get("_id")
 
 // Je donne un nom à mon adresse
 url2 = `http://localhost:3000/api/products/${obtenir}`
+// console.log(url2);
 
 // J'utilise la méthode Fetch pour récupèrer mon url
 // Je créais une fonction au chargement de la page avec la méthode fetch
@@ -112,7 +113,7 @@ function affichage2(infos) {
 
     // =============== QUANTITER ==============================
     // Function récupère quantiter
-    quantiter.addEventListener("click", number)
+    quantiter.addEventListener("change", number)
 
     // Mis la quantitée à 0 par défaut
     let resultNumber = 0
@@ -136,10 +137,10 @@ function affichage2(infos) {
         }
 
         const details = {
-            id: `${infos._id} `,
-            image: `${infos.imageUrl} `,
-            nom: `${infos.name} `,
-            prix: `${infos.price} `,
+            id: `${infos._id}`,
+            image: `${infos.imageUrl}`,
+            nom: `${infos.name}`,
+            prix: `${infos.price}`,
             couleur: resultColor,
             quantiter: resultNumber
         }
