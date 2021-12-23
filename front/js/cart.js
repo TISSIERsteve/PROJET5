@@ -118,7 +118,7 @@ for (const item1 of effacer) {
         PanierResult.splice(
             PanierResult.findIndex((x) => x.id === productId && x.couleur === productColor), 1
         )
-        console.log(PanierResult);
+        // console.log(PanierResult);
 
         // Je remets à jour mon local Storage
         window.localStorage.setItem("cart", JSON.stringify(PanierResult))
@@ -150,9 +150,9 @@ mail.addEventListener("change", VerifEmail)
 soumettre.addEventListener("click", submit)
 
 
-// Fonction vérification des champs
+// ===================================== FONCTIONS VERIFICATION DES CHAMPS======================================
 function VerifFirstName(e) {
-    const acceptPrenom = (/^([^0-9]*)$/)
+    const acceptPrenom = (/^[a-zA-Z ,.'-]+$/)
 
     if (acceptPrenom.test && (e.target.value.length >= 3)) {
         erreurprenom.innerHTML = "Prenom valide"
@@ -164,9 +164,8 @@ function VerifFirstName(e) {
     }
 }
 
-
 function VerifLastName(e) {
-    const acceptNom = (/^([^0-9]*)$/)
+    const acceptNom = (/^[a-zA-Z ,.'-]+$/)
 
     if (acceptNom.test && (e.target.value.length > 3)) {
         erreurNom.innerHTML = "Nom valide"
@@ -179,7 +178,7 @@ function VerifLastName(e) {
 }
 
 function VerifAdress(e) {
-    const acceptAdress = (/^[a-zA-Z0-9\s,.'-]{3,}$/)
+    const acceptAdress = (/^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+/)
 
     if (acceptAdress.test && (e.target.value.length > 5)) {
         erreurAdresse.innerHTML = "Adresse valide"
@@ -205,7 +204,7 @@ function VerifCity(e) {
 }
 
 function VerifEmail(e) {
-    const acceptEmail = (/\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi)
+    const acceptEmail = (/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/)
 
     if (acceptEmail.test(e.target.value)) {
         erreurMail.innerHTML = "E-mail valide"
@@ -217,34 +216,41 @@ function VerifEmail(e) {
     }
 }
 
-// Fonction pour envoyer à l'api
+//================================ FONCTION POUR ALLER SUR LA PAGE CONFIRMATION ===============================
+
+// if (VerifFirstName && VerifLastName && VerifAdress && VerifCity && VerifEmail) {
+
+
+//     //Constitution d'un tableau de produits
+
+// } else {
+//     console.log("verif louper");
+// }
 
 function submit(e) {
-    // e.preventDefault()
+    e.preventDefault()
+    const storage = window.localStorage;
+    console.log(storage);
+    const products = PanierResult.map((x) => x.id);
 
-    if (VerifFirstName.test && VerifLastName.test && VerifAdress.test && VerifCity.test && VerifEmail.test) {
+    //requête POST sur l'API et récupération de l'id de commande dans la réponse de celle-ci
+    fetch("http://localhost:3000/api/products/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(products),
+    })
+        .then((res) => res.json())
+        .then((res) => {
 
-        const produitValid = PanierResult.map((x) => x)
-        // console.log(produitValid);
 
-        fetch("http://localhost:3000/api/products/order", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(produitValid),
+            window.location.replace(`./confirmation.html?id=${res.numeroCommande}`);
         })
-            .then((res) => res.json())
-            .then((res) => {
+        .catch((error) => console.log("error"));
+};
 
-                window.location.replace(`./confirmation.html?id=${res.orderId}`);
-            })
-            .catch((error) => console.log(error));
-    }
 
-    else {
-        console.log("erreur");
-    }
 
-}
+
 
 
 

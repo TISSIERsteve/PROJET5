@@ -1,7 +1,7 @@
 // Récupère les élèments avec leur Id de la page product.html
 const item = document.querySelector(".item")
 
-// Récupère le produit par son Id
+// Récupère le produit par son Id pour afficher le produit et ses détails
 const search = new URLSearchParams(location.search)
 const obtenir = search.get("_id")
 
