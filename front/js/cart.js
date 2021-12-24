@@ -128,127 +128,121 @@ for (const item1 of effacer) {
 }
 
 // ===================================== VALIDATION FORMULAIRE ==================================================
-// Je récupère mes Id de mon formulaire
-const prenom = document.getElementById("firstName")
-const nom = document.getElementById("lastName")
-const adresse = document.getElementById("address")
-const ville = document.getElementById("city")
-const mail = document.getElementById("email")
-const erreurprenom = document.getElementById("firstNameErrorMsg")
-const erreurNom = document.getElementById("lastNameErrorMsg")
-const erreurAdresse = document.getElementById("addressErrorMsg")
-const erreurVille = document.getElementById("cityErrorMsg")
-const erreurMail = document.getElementById("emailErrorMsg")
-const soumettre = document.getElementById("order")
-
 // Ecouteurs d'évenements
-prenom.addEventListener("change", VerifFirstName)
-nom.addEventListener("change", VerifLastName)
-adresse.addEventListener("change", VerifAdress)
-ville.addEventListener("change", VerifCity)
-mail.addEventListener("change", VerifEmail)
-soumettre.addEventListener("click", submit)
-
+// prenom.addEventListener("change", VerifFirstName)
+// nom.addEventListener("change", VerifLastName)
+// adresse.addEventListener("change", VerifAdress)
+// ville.addEventListener("change", VerifCity)
+// mail.addEventListener("change", VerifEmail)
 
 // ===================================== FONCTIONS VERIFICATION DES CHAMPS======================================
-function VerifFirstName(e) {
+
+
+function verif() {
+
+    // =================== Prenom ===================
     const acceptPrenom = (/^[a-zA-Z ,.'-]+$/)
 
-    if (acceptPrenom.test && (e.target.value.length >= 3)) {
-        erreurprenom.innerHTML = "Prenom valide"
-        return true
+    firstName.addEventListener("change", (e) => {
+        if (acceptPrenom.test(e.target.value) && (e.target.value.length >= 3)) {
+            document.getElementById("firstNameErrorMsg").innerHTML = "Prénom valide"
+        } else {
+            document.getElementById("firstNameErrorMsg").innerHTML = "Prénom invalide"
+        }
+    })
 
-    } else {
-        erreurprenom.innerHTML = "Veuillez renseigner un prénom valide"
-        return false
-    }
-}
-
-function VerifLastName(e) {
+    // =================== Nom ===================
     const acceptNom = (/^[a-zA-Z ,.'-]+$/)
 
-    if (acceptNom.test && (e.target.value.length > 3)) {
-        erreurNom.innerHTML = "Nom valide"
-        return true
+    lastName.addEventListener("change", (e) => {
+        if (acceptNom.test(e.target.value) && (e.target.value.length >= 3)) {
+            document.getElementById("lastNameErrorMsg").innerHTML = "Nom valide"
+        } else {
+            document.getElementById("lastNameErrorMsg").innerHTML = "Nom invalide"
+        }
+    })
 
-    } else {
-        erreurNom.innerHTML = "Veuillez renseigner un nom valide"
-        return false
-    }
-}
-
-function VerifAdress(e) {
+    // =================== Adresse ===================
     const acceptAdress = (/^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+/)
 
-    if (acceptAdress.test && (e.target.value.length > 5)) {
-        erreurAdresse.innerHTML = "Adresse valide"
-        return true
+    address.addEventListener("change", (e) => {
+        if (acceptAdress.test(e.target.value) && (e.target.value.length >= 3)) {
+            document.getElementById("addressErrorMsg").innerHTML = "Adresse valide"
+        } else {
+            document.getElementById("addressErrorMsg").innerHTML = "Adresse invalide"
+        }
+    })
 
-    } else {
-        erreurAdresse.innerHTML = "Veuillez renseigner une adresse valide"
-        return false
-    }
-}
-
-function VerifCity(e) {
+    // =================== Ville ===================
     const acceptVille = (/^[a-zA-Z0-9\s,.'-]{3,}$/)
 
-    if (acceptVille.test && (e.target.value.length >= 3)) {
-        erreurVille.innerHTML = "Ville valide"
-        return true
+    city.addEventListener("change", (e) => {
+        if (acceptVille.test(e.target.value) && (e.target.value.length >= 3)) {
+            document.getElementById("cityErrorMsg").innerHTML = "Ville valide"
+        } else {
+            document.getElementById("cityErrorMsg").innerHTML = "Ville invalide"
+        }
+    })
 
-    } else {
-        erreurVille.innerHTML = "Veuillez renseigner une Ville valide"
-        return false
-    }
-}
-
-function VerifEmail(e) {
+    // =================== E-mail ===================
     const acceptEmail = (/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/)
 
-    if (acceptEmail.test(e.target.value)) {
-        erreurMail.innerHTML = "E-mail valide"
-        return true
+    email.addEventListener("change", (e) => {
+        if (acceptEmail.test(e.target.value) && (e.target.value.length >= 3)) {
+            document.getElementById("emailErrorMsg").innerHTML = "E-mail valide"
+        } else {
+            document.getElementById("emailErrorMsg").innerHTML = "E-mail invalide"
+        }
+    })
+
+}
+verif()
+//================================ FONCTION POUR ALLER SUR LA PAGE CONFIRMATION ===============================
+const arrayInfosClient =
+    products = PanierResult.map((x) => x.id);
+
+console.log(arrayInfosClient);
+
+
+// Je creais un stockage dans le local Je récupère mon Id dans une const
+const storage = window.localStorage;
+console.log(storage);
+
+//  Je récupère mon Id dans une const
+
+
+
+// Je creais ma méthode POST
+const init2 = {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+        NuméroId: products,
+        Clients: '',
+    }),
+
+};
+console.log(init2.body);
+
+//requête POST sur l'API et récupération de l'id de commande
+const soumettre = document.querySelector(".cart__order__form")
+soumettre.addEventListener("submit", () => {
+
+    if (init2.ok) {
+        fetch("http://localhost:3000/api/products/order", init2)
+            .then(() => {
+                console.log("Data envoyer sur POST ORDER API");
+
+                window.location.replace(`./confirmation.html?id=${res.orderId}`);
+            })
 
     } else {
-        erreurMail.innerHTML = "Veuillez renseigner un E-mail valide"
-        return false
+        console.log("Erreur avec la méthode Post");
     }
-}
 
-//================================ FONCTION POUR ALLER SUR LA PAGE CONFIRMATION ===============================
-
-// if (VerifFirstName && VerifLastName && VerifAdress && VerifCity && VerifEmail) {
-
-
-//     //Constitution d'un tableau de produits
-
-// } else {
-//     console.log("verif louper");
-// }
-
-function submit(e) {
-    e.preventDefault()
-    const storage = window.localStorage;
-    console.log(storage);
-    const products = PanierResult.map((x) => x.id);
-
-    //requête POST sur l'API et récupération de l'id de commande dans la réponse de celle-ci
-    fetch("http://localhost:3000/api/products/order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(products),
-    })
-        .then((res) => res.json())
-        .then((res) => {
-
-
-            window.location.replace(`./confirmation.html?id=${res.numeroCommande}`);
-        })
-        .catch((error) => console.log("error"));
-};
-
-
+})
 
 
 
