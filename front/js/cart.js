@@ -185,7 +185,6 @@ function verif() {
         }
     })
 }
-verif()
 
 // =================== Condition pour vérifier si il y a un achats ===================
 
@@ -252,36 +251,17 @@ const enregister = (storage) => {
             storage
         ),
     })
+
         .then((res) => res.json())
         .then((res) => {
 
             // Je remplace l'adresse http par mon id de mon api
             // Marche pas
+            console.log("Post fetch reussis");
             window.location.replace(`./confirmation.html?id=${res.Id}`);
         })
         .catch((error) => {
             console.log("erreur avec fetch");
         })
 }
-
-// Je faits un tableau pour savoir qui à pris quoi
-let detailsAchats = []
-const clients = {
-    Client_infos: {
-        Nom: firstName.value,
-        Prénom: lastName.value,
-        Adresse: address.value,
-        Ville: city.value,
-        Email: email.value
-    },
-    Achats_infos: {
-        PanierResult
-    },
-}
-
-detailsAchats.push(clients)
-
-// Je refaits un nouveau local storage
-localStorage.user = JSON.stringify(detailsAchats)
-storage = JSON.parse(localStorage.user);
-// console.log(storage);
+verif()
