@@ -188,8 +188,8 @@ function verif() {
 
 // =================== Condition pour vérifier si il y a un achats ===================
 
-if (PanierResult.length === 0 || firstName && lastName && address && city && email.value <= 3) {
-    console.log('Article en dessous de 0 ou formulaire mal remplis');
+if (PanierResult.length <= 0) {
+    console.log("Pas d'articles dans le panier");
     // Sa fonctionne pas et le bouton fonctionne meme si pas achats 
     // Et quand pas article le nom etc se met dans le url et pas quand il est remplis bizarre
     // A VOIR AVEC CLEMENT
