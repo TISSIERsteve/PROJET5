@@ -126,18 +126,8 @@ for (const item1 of effacer) {
         alert("Votre produit à été supprimé du panier")
     }
 }
-
-// ===================================== VALIDATION FORMULAIRE ==================================================
-// Ecouteurs d'évenements
-// prenom.addEventListener("change", VerifFirstName)
-// nom.addEventListener("change", VerifLastName)
-// adresse.addEventListener("change", VerifAdress)
-// ville.addEventListener("change", VerifCity)
-// mail.addEventListener("change", VerifEmail)
-
-// ===================================== FONCTIONS VERIFICATION DES CHAMPS======================================
-
-
+// ===================================== FONCTION VERIFICATION DES CHAMPS ======================================
+let firstName = document.getElementById("firstName")
 function verif() {
 
     // =================== Prenom ===================
@@ -152,7 +142,7 @@ function verif() {
     })
 
     // =================== Nom ===================
-    const acceptNom = (/^[a-zA-Z ,.'-]+$/)
+    acceptNom = (/^[a-zA-Z ,.'-]+$/)
 
     lastName.addEventListener("change", (e) => {
         if (acceptNom.test(e.target.value) && (e.target.value.length >= 3)) {
@@ -163,7 +153,7 @@ function verif() {
     })
 
     // =================== Adresse ===================
-    const acceptAdress = (/^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+/)
+    acceptAdress = (/^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+/)
 
     address.addEventListener("change", (e) => {
         if (acceptAdress.test(e.target.value) && (e.target.value.length >= 3)) {
@@ -174,7 +164,7 @@ function verif() {
     })
 
     // =================== Ville ===================
-    const acceptVille = (/^[a-zA-Z0-9\s,.'-]{3,}$/)
+    acceptVille = (/^[a-zA-Z0-9\s,.'-]{3,}$/)
 
     city.addEventListener("change", (e) => {
         if (acceptVille.test(e.target.value) && (e.target.value.length >= 3)) {
@@ -185,7 +175,7 @@ function verif() {
     })
 
     // =================== E-mail ===================
-    const acceptEmail = (/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/)
+    acceptEmail = (/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/)
 
     email.addEventListener("change", (e) => {
         if (acceptEmail.test(e.target.value) && (e.target.value.length >= 3)) {
@@ -194,58 +184,104 @@ function verif() {
             document.getElementById("emailErrorMsg").innerHTML = "E-mail invalide"
         }
     })
-
 }
 verif()
-//================================ FONCTION POUR ALLER SUR LA PAGE CONFIRMATION ===============================
-const arrayInfosClient =
-    products = PanierResult.map((x) => x.id);
 
-console.log(arrayInfosClient);
+// =================== Condition pour vérifier si il y a un achats ===================
 
+if (PanierResult.length === 0 || firstName && lastName && address && city && email.value <= 3) {
+    console.log('Article en dessous de 0 ou formulaire mal remplis');
+    // Sa fonctionne pas et le bouton fonctionne meme si pas achats 
+    // Et quand pas article le nom etc se met dans le url et pas quand il est remplis bizarre
+    // A VOIR AVEC CLEMENT
 
-// Je creais un stockage dans le local Je récupère mon Id dans une const
-const storage = window.localStorage;
-console.log(storage);
+    // =================== Submit ===================
+} else {
+    const form = document.querySelector(".cart__order__form")
 
-//  Je récupère mon Id dans une const
+    form.addEventListener("submit", (e) => {
+        validation(e)
+    })
 
+}
+// ============== Récapitulatif commande ====================
+const validation = (e) => {
+    e.preventDefault()
 
+    // Je récupére mes Id
+    let firstName = document.getElementById("firstName")
+    let lastName = document.getElementById("lastName")
+    let address = document.getElementById("address")
+    let city = document.getElementById("city")
+    let email = document.getElementById('email')
 
-// Je creais ma méthode POST
-const init2 = {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-        NuméroId: products,
-        Clients: '',
-    }),
-
-};
-console.log(init2.body);
-
-//requête POST sur l'API et récupération de l'id de commande
-const soumettre = document.querySelector(".cart__order__form")
-soumettre.addEventListener("submit", () => {
-
-    if (init2.ok) {
-        fetch("http://localhost:3000/api/products/order", init2)
-            .then(() => {
-                console.log("Data envoyer sur POST ORDER API");
-
-                window.location.replace(`./confirmation.html?id=${res.orderId}`);
-            })
-
-    } else {
-        console.log("Erreur avec la méthode Post");
+    // Je faits un tableau pour savoir qui à pris quoi
+    let detailsAchats = []
+    const clients = {
+        Client_infos: {
+            Nom: firstName.value,
+            Prénom: lastName.value,
+            Adresse: address.value,
+            Ville: city.value,
+            Email: email.value
+        },
+        Achats_infos: {
+            PanierResult
+        },
     }
 
-})
+    detailsAchats.push(clients)
 
+    // Je refaits un nouveau local storage
+    localStorage.user = JSON.stringify(detailsAchats)
+    storage = JSON.parse(localStorage.user);
+    // console.log(storage);
+    enregister()
+}
+// =================== Objet local storage clients ===================
 
+const enregister = (storage) => {
 
+    // Je creais ma méthode POST
+    fetch("http://localhost:3000/api/products/order", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(
+            storage
+        ),
+    })
+        .then((res) => res.json())
+        .then((res) => {
 
+            // Je remplace l'adresse http par mon id de mon api
+            // Marche pas
+            window.location.replace(`./confirmation.html?id=${res.Id}`);
+        })
+        .catch((error) => {
+            console.log("erreur avec fetch");
+        })
+}
 
+// Je faits un tableau pour savoir qui à pris quoi
+let detailsAchats = []
+const clients = {
+    Client_infos: {
+        Nom: firstName.value,
+        Prénom: lastName.value,
+        Adresse: address.value,
+        Ville: city.value,
+        Email: email.value
+    },
+    Achats_infos: {
+        PanierResult
+    },
+}
 
+detailsAchats.push(clients)
+
+// Je refaits un nouveau local storage
+localStorage.user = JSON.stringify(detailsAchats)
+storage = JSON.parse(localStorage.user);
+// console.log(storage);

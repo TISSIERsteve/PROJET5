@@ -1,18 +1,18 @@
 //Page de confirmation
-const orderDiv = document.getElementById("orderId");
+const numberCommande = document.getElementById("orderId");
 
 //Extraire l'id
 const params = new URLSearchParams(window.location.search);
-const orderId = params.get("id");
-console.log(orderId);
+const Id = params.get("id");
+console.log(Id);
 
 //Affichage du numéro de commande 
-if (orderId.ok) {
-    orderDiv.innerHTML = orderId;
+if (Id) {
+    numberCommande.innerHTML = Id;
 
     //Effacer le numéro de commande
-    const storage = window.localStorage;
-    storage.clear();
+    // const storage = window.localStorage;
+    // storage.clear();
 } else {
-    orderDiv.innerHTML = "Echec de l'enregistrement"
+    numberCommande.innerHTML = "Echec de l'enregistrement"
 }
