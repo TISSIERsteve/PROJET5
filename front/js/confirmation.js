@@ -7,7 +7,7 @@ const Id = params.get("id");
 console.log(Id);
 
 //Affichage du numéro de commande 
-if (Id) {
+if (Id.ok) {
     numberCommande.innerHTML = Id;
 
     //Effacer le numéro de commande

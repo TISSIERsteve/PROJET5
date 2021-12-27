@@ -185,7 +185,7 @@ function verif() {
         }
     })
 }
-
+verif()
 // =================== Condition pour vérifier si il y a un achats ===================
 
 if (PanierResult.length <= 0) {
@@ -215,31 +215,29 @@ const validation = (e) => {
     let email = document.getElementById('email')
 
     // Je faits un tableau pour savoir qui à pris quoi
-    let detailsAchats = []
+
     const clients = {
-        Client_infos: {
+        contact: {
             Nom: firstName.value,
             Prénom: lastName.value,
             Adresse: address.value,
             Ville: city.value,
             Email: email.value
         },
-        Achats_infos: {
-            PanierResult
-        },
+        products: [
+            PanierResult.map((x) => (x.id))
+        ],
     }
-
-    detailsAchats.push(clients)
+    // console.log(clients);
 
     // Je refaits un nouveau local storage
-    localStorage.user = JSON.stringify(detailsAchats)
-    storage = JSON.parse(localStorage.user);
+    localStorage.commandeClients = JSON.stringify(clients)
+    storage = JSON.parse(localStorage.commandeClients);
     // console.log(storage);
-    enregister()
-}
-// =================== Objet local storage clients ===================
+    // enregister()
+    // =================== Objet local storage clients ===================
 
-const enregister = (storage) => {
+    // const enregister = (storage) => {
 
     // Je creais ma méthode POST
     fetch("http://localhost:3000/api/products/order", {
@@ -263,5 +261,5 @@ const enregister = (storage) => {
         .catch((error) => {
             console.log("erreur avec fetch");
         })
+    // }
 }
-verif()
