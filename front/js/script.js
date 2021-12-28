@@ -1,17 +1,15 @@
-// J récupère Id de la page index.html
+// Je récupère Id de la page index.html
 const resultat = document.getElementById("items")
 
-// Je donne un nom à mon adresse
+// Je donne un nom à mon API
 url = `http://localhost:3000/api/products`
-console.log(url);
-
+// console.log(url);
 
 // Je créais une variable annonyme pour pouvoir passer ma data dedans
 let details;
 
 // J'utilise la méthode Fetch pour récupèrer mon url
-// Je créais une fonction au chargement de la page avec la méthode fetch
-
+// Je créais une fonction au chargement de la page avec fetch
 function get() {
     fetch(url)
         .then(res => {
@@ -38,7 +36,7 @@ function get() {
 
 // Je fais la méthode map pour récupérer mes produits
 // avec la fonction qui lance au chargement de la page
-// Et je récupère ma const avec Id de la page index.html
+// Et je récupère ma const RESULTAT de la page index.html
 // Et j'affiche mes produit dynamiquement
 function affichage() {
 
@@ -56,7 +54,7 @@ function affichage() {
         ).join('')
 }
 
-// Fonction qui se charge automatiquement pour récupèrer mon api
+// Fonction qui se charge automatiquement pour récupèrer mon API
 get()
 
 

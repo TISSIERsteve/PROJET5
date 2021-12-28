@@ -127,7 +127,6 @@ for (const item1 of effacer) {
     }
 }
 // ===================================== FONCTION VERIFICATION DES CHAMPS ======================================
-let firstName = document.getElementById("firstName")
 function verif() {
 
     // =================== Prenom ===================
@@ -190,6 +189,7 @@ verif()
 
 if (PanierResult.length <= 0) {
     console.log("Pas d'articles dans le panier");
+
     // Sa fonctionne pas et le bouton fonctionne meme si pas achats 
     // Et quand pas article le nom etc se met dans le url et pas quand il est remplis bizarre
     // A VOIR AVEC CLEMENT
@@ -206,7 +206,6 @@ if (PanierResult.length <= 0) {
 // ============== Récapitulatif commande ====================
 const validation = (e) => {
     e.preventDefault()
-
     // Je récupére mes Id
     let firstName = document.getElementById("firstName")
     let lastName = document.getElementById("lastName")
@@ -230,14 +229,11 @@ const validation = (e) => {
     }
     // console.log(clients);
 
+    // =================== Objet local storage clients ===================
     // Je refaits un nouveau local storage
     localStorage.commandeClients = JSON.stringify(clients)
     storage = JSON.parse(localStorage.commandeClients);
     // console.log(storage);
-    // enregister()
-    // =================== Objet local storage clients ===================
-
-    // const enregister = (storage) => {
 
     // Je creais ma méthode POST
     fetch("http://localhost:3000/api/products/order", {
@@ -246,20 +242,21 @@ const validation = (e) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(
-            storage
+            storage,
+            // console.log(storage)
         ),
     })
-
         .then((res) => res.json())
         .then((res) => {
 
-            // Je remplace l'adresse http par mon id de mon api
-            // Marche pas
+            // Je remplace l'adresse http par mon id de mon api et renvois sur la page confirmation
             console.log("Post fetch reussis");
             window.location.replace(`./confirmation.html?id=${res.Id}`);
+
         })
         .catch((error) => {
             console.log("erreur avec fetch");
         })
     // }
 }
+
