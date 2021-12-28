@@ -7,12 +7,12 @@ const Id = params.get("id");
 console.log(Id);
 
 //Affichage du numéro de commande 
-if (Id.ok) {
+if (Id) {
     numberCommande.innerHTML = Id;
 
     //Effacer le numéro de commande
-    // const storage = window.localStorage;
-    // storage.clear();
+    const storage = window.localStorage;
+    storage.clear();
 } else {
     numberCommande.innerHTML = "Echec de l'enregistrement"
 }

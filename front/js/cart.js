@@ -78,6 +78,11 @@ for (const item of changeQuantiter) {
         e.preventDefault()
         // console.log(item.value)
         let resultSupplement = parseInt(e.target.value)
+        if (resultSupplement <= 0 || resultSupplement > 100) {
+            alert("Veuillez renseigner une quantitée 1 et 100")
+            window.location.reload()
+            return
+        }
         console.log(resultSupplement);
         quantiter.innerHTML = resultSupplement
 
@@ -130,7 +135,7 @@ for (const item1 of effacer) {
 function verif() {
 
     // =================== Prenom ===================
-    const acceptPrenom = (/^[a-zA-Z ,.'-]+$/)
+    acceptPrenom = (/^[a-zA-Z ,.'-]+$/)
 
     firstName.addEventListener("change", (e) => {
         if (acceptPrenom.test(e.target.value) && (e.target.value.length >= 3)) {
@@ -152,7 +157,7 @@ function verif() {
     })
 
     // =================== Adresse ===================
-    acceptAdress = (/^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+/)
+    acceptAdress = (/^[a-zA-Z ,.'-]+$/)
 
     address.addEventListener("change", (e) => {
         if (acceptAdress.test(e.target.value) && (e.target.value.length >= 3)) {
@@ -185,21 +190,33 @@ function verif() {
     })
 }
 verif()
+
 // =================== Condition pour vérifier si il y a un achats ===================
 
 if (PanierResult.length <= 0) {
-    console.log("Pas d'articles dans le panier");
-
-    // Sa fonctionne pas et le bouton fonctionne meme si pas achats 
-    // Et quand pas article le nom etc se met dans le url et pas quand il est remplis bizarre
-    // A VOIR AVEC CLEMENT
+    console.log("Pas d'articles dans le panier")
 
     // =================== Submit ===================
 } else {
     const form = document.querySelector(".cart__order__form")
 
     form.addEventListener("submit", (e) => {
-        validation(e)
+        // let firstName = document.getElementById("firstName")
+        // let lastName = document.getElementById("lastName")
+        // let address = document.getElementById("address")
+        // let city = document.getElementById("city")
+        // let email = document.getElementById('email')
+
+        if (acceptPrenom.test(firstName.value) &&
+            acceptNom.test(lastName.value) &&
+            // acceptAdress.test(address.value) &&
+            acceptVille.test(city.value) &&
+            acceptEmail.test(email.value)) {
+
+            validation(e)
+        } else {
+            alert("Veuillez remplir les champs correctement")
+        }
     })
 
 }
@@ -217,22 +234,21 @@ const validation = (e) => {
 
     const clients = {
         contact: {
-            Nom: firstName.value,
-            Prénom: lastName.value,
-            Adresse: address.value,
-            Ville: city.value,
-            Email: email.value
+            firstName: firstName.value,
+            lastName: lastName.value,
+            address: address.value,
+            city: city.value,
+            email: email.value,
+
         },
-        products: [
-            PanierResult.map((x) => (x.id))
-        ],
+        products: PanierResult.map((x) => (x.id))
     }
     // console.log(clients);
 
     // =================== Objet local storage clients ===================
     // Je refaits un nouveau local storage
-    localStorage.commandeClients = JSON.stringify(clients)
-    storage = JSON.parse(localStorage.commandeClients);
+    // localStorage.commandeClients = JSON.stringify(clients)
+    // storage = JSON.parse(localStorage.commandeClients);
     // console.log(storage);
 
     // Je creais ma méthode POST
@@ -242,16 +258,17 @@ const validation = (e) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(
-            storage,
+            clients
             // console.log(storage)
         ),
     })
         .then((res) => res.json())
         .then((res) => {
+            console.log(res);
 
             // Je remplace l'adresse http par mon id de mon api et renvois sur la page confirmation
             console.log("Post fetch reussis");
-            window.location.replace(`./confirmation.html?id=${res.Id}`);
+            window.location.replace(`./confirmation.html?id=${res.orderId}`);
 
         })
         .catch((error) => {

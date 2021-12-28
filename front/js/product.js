@@ -130,9 +130,9 @@ function affichage2(infos) {
     function ajouter() {
 
         // Condition si la quantitée n'est pas renseigner
-        if (resultNumber <= 0) {
-            alert("Veuillez renseigner une quantitée supérieure à zéro");
-            console.log("Veuillez renseigner une quantitée supérieure à zéro");
+        if (resultNumber <= 0 || resultNumber > 100) {
+            alert("Veuillez renseigner une quantitée entre 1 et 100");
+
             return
         }
 
