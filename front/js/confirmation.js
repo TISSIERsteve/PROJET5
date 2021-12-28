@@ -1,10 +1,10 @@
 //Page de confirmation
+alert("Votre commande à bien été validée")
 const numberCommande = document.getElementById("orderId");
 
 //Extraire l'id
 const params = new URLSearchParams(window.location.search);
 const Id = params.get("id");
-console.log(Id);
 
 //Affichage du numéro de commande 
 if (Id) {

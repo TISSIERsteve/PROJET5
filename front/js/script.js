@@ -3,21 +3,18 @@ const resultat = document.getElementById("items")
 
 // Je donne un nom à mon API
 url = `http://localhost:3000/api/products`
-// console.log(url);
 
 // Je créais une variable annonyme pour pouvoir passer ma data dedans
 let details;
 
-// J'utilise la méthode Fetch pour récupèrer mon url
-// Je créais une fonction au chargement de la page avec fetch
+// J'utilise Fetch pour récupèrer mon url
+// Je créais une fonction au chargement de la page pour lancer fetch
 function get() {
     fetch(url)
         .then(res => {
             if (res.ok) {
                 res.json()
                     .then(data => {
-                        console.log("Chargement API réussi");
-                        console.log(data);
                         // Je passe la data dans ma fonction annonyme
                         details = data
 
@@ -26,16 +23,16 @@ function get() {
                     })
 
             } else {
-                // Si erreur je renvois un console log erreur
-                console.log("Echec du chargement de l API");
+                // Si erreur je renvois une alerte
+                alert("Echec du chargement de données");
                 return
             }
         }
         )
 }
 
+// Fonction qui lance au chargement de la page
 // Je fais la méthode map pour récupérer mes produits
-// avec la fonction qui lance au chargement de la page
 // Et je récupère ma const RESULTAT de la page index.html
 // Et j'affiche mes produit dynamiquement
 function affichage() {
