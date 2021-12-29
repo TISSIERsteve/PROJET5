@@ -10,7 +10,6 @@ if (!localStorage.cart) {
     alert("Panier vide")
 } else {
 
-
     const PanierResult = JSON.parse(localStorage.cart)
 
     // ================================= AFFICHAGE QUANTITER ARTICLES ==============================================
