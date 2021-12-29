@@ -1,5 +1,6 @@
 //Page de confirmation
 alert("Votre commande à bien été validée")
+
 const numberCommande = document.getElementById("orderId");
 
 //Extraire l'id
@@ -13,6 +14,7 @@ if (Id) {
     //Effacer le numéro de commande
     const storage = window.localStorage;
     storage.clear();
+
 } else {
     numberCommande.innerHTML = "Echec de l'enregistrement"
 }

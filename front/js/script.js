@@ -7,7 +7,7 @@ url = `http://localhost:3000/api/products`
 // Je créais une variable annonyme pour pouvoir passer ma data dedans
 let details;
 
-// J'utilise Fetch pour récupèrer mon url
+// J'utilise Fetch pour récupèrer mon API
 // Je créais une fonction au chargement de la page pour lancer fetch
 function get() {
     fetch(url)

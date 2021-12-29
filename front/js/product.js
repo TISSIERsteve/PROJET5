@@ -8,7 +8,7 @@ const obtenir = search.get("_id")
 // Je donne un nom à mon adresse
 url2 = `http://localhost:3000/api/products/${obtenir}`
 
-// J'utilise Fetch pour récupèrer mon url
+// J'utilise Fetch pour récupèrer mon API
 // Je créais une fonction au chargement de la page pour lancer fetch
 
 function get2() {
